@@ -28,8 +28,8 @@ while(k):
     prezzo = driver.find_elements(By.CLASS_NAME,'in-realEstateListCard__features--main')
     piano = driver.find_elements(By.CSS_SELECTOR,"li[aria-label='piano'] div[class='in-feat__data']")
     mq = driver.find_elements(By.CSS_SELECTOR,"li[aria-label='superficie'] div[class='in-feat__data']")
-    bagina =driver.find_elements(By.CSS_SELECTOR,"li[aria-label='bagno'] div[class='in-feat__data']")
-    i += 1
+    bagina =driver.find_elements(By.CSS_SELECTOR,"div[class='in-feat__data']:nth-child(2)")
+    i += 1                                         
         #print(element[0].text)
     for x in element:
         listt.append(x.text)
@@ -50,6 +50,11 @@ while(k):
 driver.close()
 print(data)
 print(len(listt))
+print(len(plistt))
+print(len(pilistt))
+print(len(mqlistt))
+print(len(blistt))
+
 #time.sleep(10)
 
 
