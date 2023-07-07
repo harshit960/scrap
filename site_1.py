@@ -12,8 +12,11 @@ headers = fakehead(
 header=headers.generate()
 print(header)
 driver = webdriver.ChromeOptions()
+PROXY = "69.92.25.39:80"
+
+driver.add_argument('--proxy-server=%s' % PROXY)
 driver.add_argument('--blink-settings=imagesEnabled=false')
-driver.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.0; WOW64; rv:65.0) Gecko/20100101 Firefox/65.0")
+#driver.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.0; WOW64; rv:65.0) Gecko/20100101 Firefox/65.0")
 driver = webdriver.Chrome(options=driver)
 #driver.implicitly_wait(3)
 
