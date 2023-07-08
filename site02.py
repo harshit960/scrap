@@ -3,21 +3,15 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from fake_headers import Headers as fakehead
-headers = fakehead(
-        # generate any browser & os headeers
-        headers=True  # don`t generate misc headers
-    )
+import undetected_chromedriver as uc
 
-header=headers.generate()
-print(header)
-driver = webdriver.ChromeOptions()
+driver = uc.ChromeOptions()
 PROXY = "34.154.161.152:80"
 
-driver.add_argument('--proxy-server=%s' % PROXY)
+#driver.add_argument('--proxy-server=%s' % PROXY)
 driver.add_argument('--blink-settings=imagesEnabled=false')
-#driver.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.0; WOW64; rv:65.0) Gecko/20100101 Firefox/65.0")
-driver = webdriver.Chrome(options=driver)
+
+driver = uc.Chrome(options=driver)
 #driver.implicitly_wait(3)
 
 
