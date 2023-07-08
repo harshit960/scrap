@@ -12,7 +12,7 @@ headers = fakehead(
 header=headers.generate()
 print(header)
 driver = webdriver.ChromeOptions()
-PROXY = "69.92.25.39:80"
+PROXY = "34.154.161.152:80"
 
 driver.add_argument('--proxy-server=%s' % PROXY)
 driver.add_argument('--blink-settings=imagesEnabled=false')
