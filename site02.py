@@ -63,3 +63,4 @@ print(len(blistt))
 #time.sleep(10)
 
 
+site1=[link1,link2]

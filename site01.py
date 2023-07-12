@@ -28,8 +28,11 @@ while(k):
     prezzo = driver.find_elements(By.CLASS_NAME,'in-realEstateListCard__features--main')
     piano = driver.find_elements(By.CSS_SELECTOR,"li[aria-label='piano'] div[class='in-feat__data']")
     mq = driver.find_elements(By.CSS_SELECTOR,"li[aria-label='superficie'] div[class='in-feat__data']")
-    bagina =driver.find_elements(By.CSS_SELECTOR,"div[class='in-feat__data']:nth-child(2)")
-    i += 1                                         
+    bagina =driver.find_elements(By.CSS_SELECTOR,".nd-list .nd-list--pipe")
+    i += 1     
+    #for j in range(len(element)):
+    #    temp_list=[]
+        
         #print(element[0].text)
     for x in element:
         listt.append(x.text)
@@ -48,13 +51,20 @@ while(k):
         break
     
 driver.close()
-print(data)
+#print(data)
 print(len(listt))
 print(len(plistt))
 print(len(pilistt))
 print(len(mqlistt))
 print(len(blistt))
 
+print(blistt)
+
 #time.sleep(10)
 
 
+#dis={1:[Appartamento via dei Carrozzieri,€ 90.000,T,]}
+
+
+
+link3="https://www.immobiliare.it/search-list/?vrt=43.557941%2C10.316151%3B43.55941%2C10.315325%3B43.559387%2C10.314724%3B43.55962%2C10.314521%3B43.559994%2C10.3148%3B43.560444%2C10.314928%3B43.560685%2C10.315711%3B43.561152%2C10.318061%3B43.561245%2C10.31878%3B43.560312%2C10.318898%3B43.560071%2C10.318&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)
