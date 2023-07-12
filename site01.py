@@ -62,9 +62,3 @@ print(blistt)
 
 #time.sleep(10)
 
-
-#dis={1:[Appartamento via dei Carrozzieri,€ 90.000,T,]}
-
-
-
-link3="https://www.immobiliare.it/search-list/?vrt=43.557941%2C10.316151%3B43.55941%2C10.315325%3B43.559387%2C10.314724%3B43.55962%2C10.314521%3B43.559994%2C10.3148%3B43.560444%2C10.314928%3B43.560685%2C10.315711%3B43.561152%2C10.318061%3B43.561245%2C10.31878%3B43.560312%2C10.318898%3B43.560071%2C10.318&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)
