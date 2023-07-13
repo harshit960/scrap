@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def read_excel_file(filename):
     # Read the Excel file
     df = pd.read_excel(filename)
@@ -17,11 +18,9 @@ def read_excel_file(filename):
     return column_lists
 
 
-filename = r"C:\Users\abhi9\OneDrive\Documents\GitHub\scrap\files\input.xlsx"
+filename = r"D:\github proj\scrap\files\input.xlsx"
 
 # Call the function to read the Excel file
 result = read_excel_file(filename)
 
-# Print the lists
-for column, data in result.items():
-    print(f"{column}: {data}")
+print(result.items())
