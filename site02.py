@@ -67,7 +67,7 @@ for i in range(len(listt)):
     templistt.append(pilistt[i])
     templistt.append(mqlistt[i])
     templistt.append(blistt[i])
-    data[i]=templistt
+    outdata[i]=templistt
 
 print(outdata)
 
