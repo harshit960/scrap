@@ -23,6 +23,13 @@ def read_excel_file(filename):
     return column_lists
 
 
+def out(listt):
+    f = open("out.txt", "w+")
+    for i in listt:
+        f.write(str(i))
+    f.close()
+
+
 driver = uc.ChromeOptions()
 driver.add_argument("--blink-settings=imagesEnabled=false")
 driver = uc.Chrome(options=driver)
@@ -153,11 +160,17 @@ filename = r"D:\github proj\scrap\files\input.xlsx"
 # Call the function to read the Excel file
 result = read_excel_file(filename)
 
-#print(result["Link 1"])
-
+# print(result["Link 1"])
+outList = []
 for i in range(len(result["Link 1"])):
-    print(site1(result["Link 1"][i]))
+    outList.append(site1(result["Link 1"][i]))
+    print("site 1 done")
 for i in range(len(result["Link 2"])):
-    print(site2(result["Link 2"][i]))
-for i in range(len(result["Link 3"])):    
-    print(site3(result["Link 3"][i]))
+    outList.append(site2(result["Link 2"][i]))
+    print("site 2 done")
+for i in range(len(result["Link 3"])):
+    outList.append(site3(result["Link 3"][i]))
+    print("site 3 done")
+
+
+out(outList)
