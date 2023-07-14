@@ -1,6 +1,6 @@
 import time
 import pandas as pd
-
+from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
@@ -30,9 +30,10 @@ def out(listt):
     f.close()
 
 
-driver = uc.ChromeOptions()
-driver.add_argument("--blink-settings=imagesEnabled=false")
-driver = uc.Chrome(options=driver)
+options = uc.ChromeOptions()
+options.add_argument("--blink-settings=imagesEnabled=false")
+setproxy(options)
+driver = uc.Chrome(options=options)
 
 
 def site1(link):
