@@ -150,7 +150,6 @@ def site3(link):
         templistt.append(plistt[i])
         templistt.append(pilistt[i])
         templistt.append(mqlistt[i])
-        templistt.append(blistt[i])
         outdata[i] = templistt
     return outdata
 
