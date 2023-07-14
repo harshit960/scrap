@@ -1,9 +1,27 @@
 import time
+import pandas as pd
 
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
+
+
+def read_excel_file(filename):
+    # Read the Excel file
+    df = pd.read_excel(filename)
+
+    # Create a dictionary to store the lists
+    column_lists = {}
+
+    # Iterate over the columns
+    for column in df.columns:
+        # Get the column data as a list
+        column_data = df[column].tolist()
+        # Add the list to the dictionary using the column name as the key
+        column_lists[column] = column_data
+
+    return column_lists
+
 
 driver = uc.ChromeOptions()
 driver.add_argument("--blink-settings=imagesEnabled=false")
@@ -130,22 +148,16 @@ def site3(link):
     return outdata
 
 
-link1 = (
-    "https://www.immobiliare.it/search-list/?vrt=43.54805%2C10.311828%3B43.548385%2C10.311527%3B43.547864%2C10.310111%3B43.547693%2C10.310959%3B43.547374%2C10.311184%3B43.547125%2C10.31054%3B43.546518%2C10.310873%3B43.547047%2C10.312589%3B43.547856%2C10.312032%3B43.54805%2C10.311828&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="
-    + "1"
-    + "&slau=1"
-)
-link2 = (
-    "https://www.idealista.it/aree/vendita-case/con-aste_no/lista-"
-    + "1"
-    + "?ordine=area-asc&shape=%28%28%7DnzhGul%7C%7D%40cGqb%40%7C%40%7B%40vOhJdAh%40h%40h%40FjLsDbAAbCsGzB%29%29"
-)
+filename = r"D:\github proj\scrap\files\input.xlsx"
 
-link3 = (
-    "https://www.casa.it/srp/?page="
-    + "1"
-    + "&tr=vendita&exclude_auction=true&sortType=surface_asc&geopolygon={%22polygon%22:[[43.55615623790824,10.312495672887065],[43.55635061711003,10.312699520772197],[43.559367301940625,10.314759457295635],[43.55970939068563,10.314501965230205],[43.558418772988844,10.30888005513499],[43.5575635291655,10.309169733708599],[43.557097027418095,10.309470141118267],[43.557097027418095,10.310060227101543],[43.556109586806535,10.310489380543926]],%22bbox%22:[[43.56155197165589,10.30314012784312],[43.55426683939984,10.320499384587505]],%22zoom%22:17}&precision=7&propertyTypeGroup=case"
-)
-print(site1(link1))
-print(site2(link2))
-print(site3(link3))
+# Call the function to read the Excel file
+result = read_excel_file(filename)
+
+#print(result["Link 1"])
+
+for i in range(len(result["Link 1"])):
+    print(site1(result["Link 1"][i]))
+for i in range(len(result["Link 2"])):
+    print(site2(result["Link 2"][i]))
+for i in range(len(result["Link 3"])):    
+    print(site3(result["Link 3"][i]))
