@@ -154,7 +154,7 @@ def site3(link):
     return outdata
 
 
-filename = r"D:\github proj\scrap\files\input.xlsx"
+filename = "./files/input.xlsx"
 
 # Call the function to read the Excel file
 result = read_excel_file(filename)
