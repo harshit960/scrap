@@ -162,15 +162,19 @@ result = read_excel_file(filename)
 
 # print(result["Link 1"])
 outList = []
+outSite1=[]
+outSite2=[]
+outSite3=[]
 for i in range(len(result["Link 1"])):
-    outList.append(site1(result["Link 1"][i]))
+    outSite1.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
-    outList.append(site2(result["Link 2"][i]))
+    outSite2.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
-    outList.append(site3(result["Link 3"][i]))
+    outSite3.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
 
 out(outList)
+print(outSite1)
