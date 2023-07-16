@@ -179,6 +179,7 @@ outList.extend(outSite1)
 outList.extend(outSite2)
 outList.extend(outSite3)
 
+u_df=[]
 for i in outList:
     df = pd.DataFrame(list(i.values()))
     u_df.append(df)
