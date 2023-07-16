@@ -175,6 +175,13 @@ for i in range(len(result["Link 3"])):
     outSite3.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
+outList.extend(outSite1)
+outList.extend(outSite2)
+outList.extend(outSite3)
 
-out(outList)
-print(outSite1)
+for i in outList:
+    df = pd.DataFrame(list(i.values()))
+    u_df.append(df)
+
+u_df = pd.concat(u_df,axis=0)
+u_df.to_excel('file.xlsx',index=False)
