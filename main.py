@@ -60,10 +60,10 @@ def site1(link):
     for i in range(len(listt)):
         temolistt = []
         temolistt.append(listt[i])
+        temolistt.append(linkk[i])
 
         b = blistt[i].split("\n")
         temolistt.extend(b)
-        temolistt.append(linkk[i])
         outdata[i] = temolistt
 
     # driver.close()
@@ -106,11 +106,11 @@ def site2(link):
     for i in range(len(listt)):
         templistt = []
         templistt.append(listt[i])
+        templistt.append(linkk[i])
         templistt.append(plistt[i])
         templistt.append(pilistt[i])
         templistt.append(mqlistt[i])
         templistt.append(blistt[i])
-        templistt.append(linkk[i])
         outdata[i] = templistt
     return outdata
 
@@ -155,10 +155,10 @@ def site3(link):
     for i in range(len(listt)):
         templistt = []
         templistt.append(listt[i])
+        templistt.append(linkk[i])
         templistt.append(plistt[i])
         templistt.append(pilistt[i])
         templistt.append(mqlistt[i])
-        templistt.append(linkk[i])
         outdata[i] = templistt
     return outdata
 
