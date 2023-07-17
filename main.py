@@ -56,15 +56,15 @@ def site1(link):
         linkk.append(x.get_attribute("href"))
     for q in bagina:
         blistt.append(q.text)
+    if len(listt)==len(blistt):
+        for i in range(len(listt)):
+            temolistt = []
+            temolistt.append(listt[i])
+            temolistt.append(linkk[i])
 
-    for i in range(len(listt)):
-        temolistt = []
-        temolistt.append(listt[i])
-        temolistt.append(linkk[i])
-
-        b = blistt[i].split("\n")
-        temolistt.extend(b)
-        outdata[i] = temolistt
+            b = blistt[i].split("\n")
+            temolistt.extend(b)
+            outdata[i] = temolistt
 
     # driver.close()
     return outdata
