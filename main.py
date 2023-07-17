@@ -76,6 +76,7 @@ def site2(link):
     pilistt = []
     mqlistt = []
     blistt = []
+    total=[]
     linkk=[]
     outdata = {}
     k = True
@@ -88,7 +89,8 @@ def site2(link):
     piano = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[1]")
     mq = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[2]")
     bagina = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[3]")
-
+    container = driver.find_elements(By.CSS_SELECTOR, ".item-info-container")
+    
     for x in element:
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
@@ -100,17 +102,24 @@ def site2(link):
         mqlistt.append(p.text)
     for q in bagina:
         blistt.append(q.text)
-
+    for r in container:
+        rawTxt=r.text
+        
+        total.append(rawTxt.split("\n"))
+    print(total)
     # driver.close()
-
+    print(len(listt))
+    print(blistt)
     for i in range(len(listt)):
         templistt = []
         templistt.append(listt[i])
         templistt.append(linkk[i])
-        templistt.append(plistt[i])
-        templistt.append(pilistt[i])
-        templistt.append(mqlistt[i])
-        templistt.append(blistt[i])
+        #templistt.append(plistt[i])
+        #templistt.append(pilistt[i])
+        #templistt.append(mqlistt[i])
+        #templistt.append(blistt[i])
+        templistt.append(total[i][1])
+        templistt.append(total[i][2])
         outdata[i] = templistt
     return outdata
 
@@ -174,13 +183,13 @@ outSite1=[]
 outSite2=[]
 outSite3=[]
 for i in range(len(result["Link 1"])):
-    outSite1.append(site1(result["Link 1"][i]))
+    #outSite1.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
     outSite2.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
-    outSite3.append(site3(result["Link 3"][i]))
+    #outSite3.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
 outList.extend(outSite1)
