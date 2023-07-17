@@ -24,6 +24,7 @@ plistt=[]
 pilistt=[]
 mqlistt=[]
 blistt=[]
+linkk=[]
 data ={"name":listt,"prezzo":plistt,"piano":pilistt,"mq":mqlistt,"bagina":blistt}
 outdata={}
 k=True
@@ -40,6 +41,7 @@ while(k):
     i = i+1                                       
     for x in element:
         listt.append(x.text)
+        linkk.append(x.get_attribute("href"))
     for y in prezzo:
         plistt.append(y.text)
     for z in piano:
@@ -67,6 +69,7 @@ for i in range(len(listt)):
     templistt.append(pilistt[i])
     templistt.append(mqlistt[i])
     templistt.append(blistt[i])
+    templistt.append(linkk[i])
     outdata[i]=templistt
 
 print(outdata)
