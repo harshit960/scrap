@@ -110,17 +110,18 @@ def site2(link):
     # driver.close()
     #print(len(listt))
     #print(blistt)
-    for i in range(len(listt)):
-        templistt = []
-        templistt.append(listt[i])
-        templistt.append(linkk[i])
-        #templistt.append(plistt[i])
-        #templistt.append(pilistt[i])
-        #templistt.append(mqlistt[i])
-        #templistt.append(blistt[i])
-        templistt.append(total[i][1])
-        templistt.append(total[i][2])
-        outdata[i] = templistt
+    if len(listt)==len(total):
+        for i in range(len(listt)):
+            templistt = []
+            templistt.append(listt[i])
+            templistt.append(linkk[i])
+            #templistt.append(plistt[i])
+            #templistt.append(pilistt[i])
+            #templistt.append(mqlistt[i])
+            #templistt.append(blistt[i])
+            templistt.append(total[i][1])
+            templistt.append(total[i][2])
+            outdata[i] = templistt
     return outdata
 
 
