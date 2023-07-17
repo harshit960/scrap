@@ -40,6 +40,7 @@ def site1(link):
     i = 1
     listt = []
     blistt = []
+    linkk=[]
     outdata = {}
     k = True
 
@@ -52,6 +53,7 @@ def site1(link):
 
     for x in element:
         listt.append(x.text)
+        linkk.append(x.get_attribute("href"))
     for q in bagina:
         blistt.append(q.text)
 
@@ -61,6 +63,7 @@ def site1(link):
 
         b = blistt[i].split("\n")
         temolistt.extend(b)
+        temolistt.append(linkk[i])
         outdata[i] = temolistt
 
     # driver.close()
