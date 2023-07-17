@@ -121,6 +121,7 @@ def site3(link):
     pilistt = []
     mqlistt = []
     blistt = []
+    linkk=[]
 
     outdata = {}
     k = True
@@ -141,6 +142,7 @@ def site3(link):
     )
     for x in element:
         listt.append(x.text)
+        linkk.append(x.get_attribute("href"))
     for y in prezzo:
         plistt.append(y.text)
     for z in piano:
@@ -156,6 +158,7 @@ def site3(link):
         templistt.append(plistt[i])
         templistt.append(pilistt[i])
         templistt.append(mqlistt[i])
+        templistt.append(linkk[i])
         outdata[i] = templistt
     return outdata
 
