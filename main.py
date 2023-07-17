@@ -106,10 +106,10 @@ def site2(link):
         rawTxt=r.text
         
         total.append(rawTxt.split("\n"))
-    print(total)
+    #print(total)
     # driver.close()
-    print(len(listt))
-    print(blistt)
+    #print(len(listt))
+    #print(blistt)
     for i in range(len(listt)):
         templistt = []
         templistt.append(listt[i])
