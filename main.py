@@ -183,13 +183,13 @@ outSite1=[]
 outSite2=[]
 outSite3=[]
 for i in range(len(result["Link 1"])):
-    #outSite1.append(site1(result["Link 1"][i]))
+    outSite1.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
     outSite2.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
-    #outSite3.append(site3(result["Link 3"][i]))
+    outSite3.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
 outList.extend(outSite1)
