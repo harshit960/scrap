@@ -132,6 +132,7 @@ def site3(link):
     mqlistt = []
     blistt = []
     linkk=[]
+    total = []
 
     outdata = {}
     k = True
@@ -150,6 +151,8 @@ def site3(link):
         By.XPATH,
         "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[2]",
     )
+    container = driver.find_elements(By.XPATH, "//div[@class='art-infos is-clickable']")
+
     for x in element:
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
@@ -159,17 +162,34 @@ def site3(link):
         pilistt.append(z.text)
     for p in mq:
         mqlistt.append(p.text)
+    for r in container:
+        rawTxt=r.text
+        
+        total.append(rawTxt.split("\n"))
 
     # driver.close()
 
-    for i in range(len(listt)):
-        templistt = []
-        templistt.append(listt[i])
-        templistt.append(linkk[i])
-        templistt.append(plistt[i])
-        templistt.append(pilistt[i])
-        templistt.append(mqlistt[i])
-        outdata[i] = templistt
+    # for i in range(len(listt)):
+    #     templistt = []
+    #     templistt.append(listt[i])
+    #     templistt.append(linkk[i])
+    #     templistt.append(plistt[i])
+    #     templistt.append(pilistt[i])
+    #     templistt.append(mqlistt[i])
+    #     outdata[i] = templistt
+
+    if len(listt)==len(total):
+        for i in range(len(listt)):
+            templistt = []
+            templistt.append(listt[i])
+            templistt.append(linkk[i])
+            #templistt.append(plistt[i])
+            #templistt.append(pilistt[i])
+            #templistt.append(mqlistt[i])
+            #templistt.append(blistt[i])
+            templistt.append(total[i][1])
+            templistt.append(total[i][2])
+            outdata[i] = templistt
     return outdata
 
 
