@@ -40,6 +40,7 @@ def site1(link):
     i = 1
     listt = []
     blistt = []
+    prezzos=[]
     linkk=[]
     outdata = {}
     k = True
@@ -50,20 +51,22 @@ def site1(link):
     time.sleep(1)
     element = driver.find_elements(By.CSS_SELECTOR, ".in-card__title")
     bagina = driver.find_elements(By.CSS_SELECTOR, ".nd-list .nd-list--pipe")
-
+    prezzo = driver.find_elements(By.CLASS_NAME,'in-realEstateListCard__features--main')
     for x in element:
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
     for q in bagina:
         blistt.append(q.text)
+    for p in prezzo:
+        prezzos.append(p.text)
     if len(listt)==len(blistt):
         for i in range(len(listt)):
             temolistt = []
             temolistt.append(listt[i])
-            temolistt.append(linkk[i])
-
+            temolistt.append(prezzos[i])
             b = blistt[i].split("\n")
             temolistt.extend(b)
+            temolistt.append(linkk[i])
             outdata[i] = temolistt
 
     # driver.close()
@@ -114,13 +117,13 @@ def site2(link):
         for i in range(len(listt)):
             templistt = []
             templistt.append(listt[i])
-            templistt.append(linkk[i])
             #templistt.append(plistt[i])
             #templistt.append(pilistt[i])
             #templistt.append(mqlistt[i])
             #templistt.append(blistt[i])
             templistt.append(total[i][1])
             templistt.append(total[i][2])
+            templistt.append(linkk[i])
             outdata[i] = templistt
     return outdata
 
@@ -182,13 +185,13 @@ def site3(link):
         for i in range(len(listt)):
             templistt = []
             templistt.append(listt[i])
-            templistt.append(linkk[i])
             #templistt.append(plistt[i])
             #templistt.append(pilistt[i])
             #templistt.append(mqlistt[i])
             #templistt.append(blistt[i])
             templistt.append(total[i][1])
             templistt.append(total[i][2])
+            templistt.append(linkk[i])
             outdata[i] = templistt
     return outdata
 
