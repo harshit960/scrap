@@ -43,8 +43,6 @@ def site1(link):
     prezzos=[]
     linkk=[]
     outdata = {}
-    k = True
-
     # link="https://www.immobiliare.it/search-list/?vrt=43.54805%2C10.311828%3B43.548385%2C10.311527%3B43.547864%2C10.310111%3B43.547693%2C10.310959%3B43.547374%2C10.311184%3B43.547125%2C10.31054%3B43.546518%2C10.310873%3B43.547047%2C10.312589%3B43.547856%2C10.312032%3B43.54805%2C10.311828&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
     # link2="https://www.immobiliare.it/search-list/?vrt=43.544699%2C10.304929%3B43.544123%2C10.304704%3B43.544131%2C10.304028%3B43.54648%2C10.304511%3B43.547179%2C10.304414%3B43.547498%2C10.306882%3B43.547397%2C10.309414%3B43.547164%2C10.310519%3B43.546495%2C10.310905%3B43.544893%2C10.305927%3B43.54466%2C10.305283%3B43.544699%2C10.304929&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
     driver.get(link)
@@ -65,14 +63,24 @@ def site1(link):
     if len(listt)==len(blistt):
         for i in range(len(listt)):
             temolistt = []
-            temolistt.append(listt[i])
-            temolistt.append(prezzos[i])
+            dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
             b = blistt[i].split("\n")
-            temolistt.extend(b)
-            temolistt.append(linkk[i])
-            outdata[i] = temolistt
 
+            # temolistt.append(listt[i])
+            # temolistt.append(prezzos[i])
+            # temolistt.extend(b)
+            # print(b)
+            # temolistt.append(linkk[i])
+            # outdata[i] = temolistt
+            dictt[1]=listt[i]
+            dictt[2]=b[1]
+            dictt[3]=prezzos[i]
+            dictt[7]=b[3]
+            dictt[9]=b[-1]
+            dictt[13]=linkk[i]
+            outdata[i]=dictt
     # driver.close()
+    
     return outdata
 
 
@@ -187,15 +195,22 @@ def site3(link):
     if len(listt)==len(total):
         for i in range(len(listt)):
             templistt = []
-            templistt.append(listt[i])
+            dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+
+            # templistt.append(listt[i])
             #templistt.append(plistt[i])
             #templistt.append(pilistt[i])
             #templistt.append(mqlistt[i])
             #templistt.append(blistt[i])
-            templistt.append(str(total[i][0])+" "+str(total[i][1]))
-            templistt.append(total[i][2])
-            templistt.append(linkk[i])
-            outdata[i] = templistt
+            # templistt.append(str(total[i][0])+" "+str(total[i][1]))
+            # templistt.append(total[i][2])
+            # templistt.append(linkk[i])
+            # outdata[i] = templistt
+            dictt[1]=listt[i]
+            dictt[2]=total[i][2]
+            dictt[3]=str(total[i][0])+" "+str(total[i][1])
+            dictt[8]=linkk[i]
+            outdata[i]=dictt
     return outdata
 
 
@@ -206,22 +221,18 @@ result = read_excel_file(filename)
 
 # print(result["Link 1"])
 outList = []
-outSite1=[]
-outSite2=[]
-outSite3=[]
+
 for i in range(len(result["Link 1"])):
-    #outSite1.append(site1(result["Link 1"][i]))
+    outList.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
-    #outSite2.append(site2(result["Link 2"][i]))
+    outList.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
-    outSite3.append(site3(result["Link 3"][i]))
+    outList.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
-outList.extend(outSite1)
-outList.extend(outSite2)
-outList.extend(outSite3)
+
 
 u_df=[]
 for i in outList:
