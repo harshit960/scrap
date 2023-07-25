@@ -1,5 +1,6 @@
 import time
 import pandas as pd
+import re
 from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -63,9 +64,8 @@ def site1(link):
     if len(listt)==len(blistt):
         for i in range(len(listt)):
             temolistt = []
-            dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
             b = blistt[i].split("\n")
-
             # temolistt.append(listt[i])
             # temolistt.append(prezzos[i])
             # temolistt.extend(b)
@@ -76,9 +76,15 @@ def site1(link):
             dictt[2]=b[1]
             dictt[3]=prezzos[i]
             dictt[7]=b[3]
-            dictt[9]=b[-1]
+            
+            if len(b) >= 5:
+                dictt[9]=b[4]
+            
             dictt[13]=linkk[i]
             outdata[i]=dictt
+    else:
+        print(len(listt))
+        print(len(blistt))
     # driver.close()
     
     return outdata
@@ -110,33 +116,45 @@ def site2(link):
         linkk.append(x.get_attribute("href"))
     for y in prezzo:
         plistt.append(y.text)
-    for z in piano:
-        pilistt.append(z.text)
-    for p in mq:
-        mqlistt.append(p.text)
-    for q in bagina:
-        blistt.append(q.text)
     for r in container:
         rawTxt=r.text
-        
         total.append(rawTxt.split("\n"))
-    #print(total)
-    # driver.close()
-    #print(len(listt))
-    #print(blistt)
+            
     if len(listt)==len(total):
         for i in range(len(listt)):
             templistt = []
-            templistt.append(listt[i])
+            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
+            
+            #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+            #templistt.append(listt[i])
             #templistt.append(plistt[i])
             #templistt.append(pilistt[i])
             #templistt.append(mqlistt[i])
-            #templistt.append(blistt[i])
-            templistt.append(total[i][1])
-            templistt.append(total[i][2])
-            templistt.append(linkk[i])
-            outdata[i] = templistt
-    return outdata
+            # #templistt.append(blistt[i])
+            # templistt.append(total[i][1])
+            # templistt.append(total[i][2])
+            pat=r"(\w+)\s+m2(.*)"
+            mq=re.search(pat,total[i][2])
+            # print(mq)
+            # if mq:
+            #     templistt.append(mq.group(1))
+            #     templistt.append(mq.group(2))
+            # templistt.append(linkk[i])
+            # outdata[i] = templistt
+
+            dictt[1]=listt[i]
+            dictt[3]=total[i][1]
+            if mq:
+                dictt[2]=mq.group(1)
+                dictt[7]=mq.group(2)
+                dictt[8]=mq.group(2)
+            dictt[13]=linkk[i]
+            outdata[i]=dictt
+        return outdata
+    else:
+        
+        print(len(listt))
+        print(len(blistt))
 
 
 def site3(link):
@@ -195,7 +213,8 @@ def site3(link):
     if len(listt)==len(total):
         for i in range(len(listt)):
             templistt = []
-            dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+            #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
 
             # templistt.append(listt[i])
             #templistt.append(plistt[i])
@@ -211,7 +230,11 @@ def site3(link):
             dictt[3]=str(total[i][0])+" "+str(total[i][1])
             dictt[8]=linkk[i]
             outdata[i]=dictt
-    return outdata
+        return outdata
+    else:
+        
+        print(len(listt))
+        print(len(blistt))
 
 
 filename = "./files/input.xlsx"
@@ -226,10 +249,10 @@ for i in range(len(result["Link 1"])):
     outList.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
-    outList.append(site2(result["Link 2"][i]))
+    #outList.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
-    outList.append(site3(result["Link 3"][i]))
+    #outList.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
 
