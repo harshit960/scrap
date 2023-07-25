@@ -51,7 +51,7 @@ def site1(link):
     time.sleep(1)
     element = driver.find_elements(By.CSS_SELECTOR, ".in-card__title")
     bagina = driver.find_elements(By.CSS_SELECTOR, ".nd-list .nd-list--pipe")
-    prezzo = driver.find_elements(By.CLASS_NAME,'in-realEstateListCard__features--main')
+    prezzo = driver.find_elements(By.CSS_SELECTOR,'.in-realEstateListCard__priceOnTop')
     for x in element:
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
@@ -59,6 +59,9 @@ def site1(link):
         blistt.append(q.text)
     for p in prezzo:
         prezzos.append(p.text)
+    # print(len(prezzos))
+    # print(len(listt))
+    # print(len(blistt))
     if len(listt)==len(blistt):
         for i in range(len(listt)):
             temolistt = []
@@ -189,7 +192,7 @@ def site3(link):
             #templistt.append(pilistt[i])
             #templistt.append(mqlistt[i])
             #templistt.append(blistt[i])
-            templistt.append(total[i][1])
+            templistt.append(str(total[i][0])+" "+str(total[i][1]))
             templistt.append(total[i][2])
             templistt.append(linkk[i])
             outdata[i] = templistt
@@ -207,10 +210,10 @@ outSite1=[]
 outSite2=[]
 outSite3=[]
 for i in range(len(result["Link 1"])):
-    outSite1.append(site1(result["Link 1"][i]))
+    #outSite1.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
-    outSite2.append(site2(result["Link 2"][i]))
+    #outSite2.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
     outSite3.append(site3(result["Link 3"][i]))
@@ -226,4 +229,4 @@ for i in outList:
     u_df.append(df)
 
 u_df = pd.concat(u_df,axis=0)
-u_df.to_excel('file.xlsx',index=False)
+u_df.to_excel('file'+str(time.time())+'.xlsx',index=False)
