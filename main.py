@@ -249,10 +249,10 @@ for i in range(len(result["Link 1"])):
     outList.append(site1(result["Link 1"][i]))
     print("site 1 done")
 for i in range(len(result["Link 2"])):
-    #outList.append(site2(result["Link 2"][i]))
+    outList.append(site2(result["Link 2"][i]))
     print("site 2 done")
 for i in range(len(result["Link 3"])):
-    #outList.append(site3(result["Link 3"][i]))
+    outList.append(site3(result["Link 3"][i]))
     print("site 3 done")
 
 
