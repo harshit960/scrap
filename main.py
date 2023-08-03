@@ -5,23 +5,36 @@ from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
+from pathlib import Path
 
+def slugify(s):
+  s = s.lower().strip()
+  s = re.sub(r'[^\w\s-]', '', s)
+  s = re.sub(r'[\s_-]+', '-', s)
+  s = re.sub(r'^-+|-+$', '', s)
+  return s
+
+def dataOut(outList,t):
+    u_df=[]
+    
+    Path(timee).mkdir(parents=True, exist_ok=True)
+    for i in outList:
+        df = pd.DataFrame(list(i.values()))
+        u_df.append(df)
+
+    u_df = pd.concat(u_df,axis=0)
+    u_df.to_excel(timee+'/'+str(t)+'-file-'+timee+'.xlsx',index=False)
 
 def read_excel_file(filename):
     # Read the Excel file
     df = pd.read_excel(filename)
-
+    #print(df)
     # Create a dictionary to store the lists
-    column_lists = {}
+    
+    data_list = df.to_dict(orient='records')
 
-    # Iterate over the columns
-    for column in df.columns:
-        # Get the column data as a list
-        column_data = df[column].tolist()
-        # Add the list to the dictionary using the column name as the key
-        column_lists[column] = column_data
-
-    return column_lists
+    return data_list
+    
 
 
 def out(listt):
@@ -238,29 +251,21 @@ def site3(link):
 
 
 filename = "./files/input.xlsx"
-
+timee=str(slugify(time.ctime(time.time())))
 # Call the function to read the Excel file
 result = read_excel_file(filename)
-
+#print(result)
 # print(result["Link 1"])
-outList = []
 
-for i in range(len(result["Link 1"])):
-    outList.append(site1(result["Link 1"][i]))
+for i in range(len(result)):
+    outList = []
+    outList.append(site1(result[i]["Link 1"]))
     print("site 1 done")
-for i in range(len(result["Link 2"])):
-    outList.append(site2(result["Link 2"][i]))
+    outList.append(site2(result[i]["Link 2"]))
     print("site 2 done")
-for i in range(len(result["Link 3"])):
-    outList.append(site3(result["Link 3"][i]))
+    outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
+    dataOut(outList,i)
 
 
 
-u_df=[]
-for i in outList:
-    df = pd.DataFrame(list(i.values()))
-    u_df.append(df)
-
-u_df = pd.concat(u_df,axis=0)
-u_df.to_excel('file'+str(time.time())+'.xlsx',index=False)
