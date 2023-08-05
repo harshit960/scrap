@@ -12,5 +12,6 @@ def setproxy(chrome_options):
         proxy = None  # Set proxy as None if there's an error
 
     if proxy:
+        print("using proxy ",proxy)
         chrome_options.add_argument(f'--proxy-server=http://{proxy}')
 
