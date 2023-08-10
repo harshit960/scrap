@@ -46,15 +46,16 @@ def out(listt):
 
 options = webdriver.ChromeOptions()
 # options.add_argument("--blink-settings=imagesEnabled=false")
-#setproxy(options)
-name=input("Enter name:")
+setproxy(options)
+name=input("Enter name: ")
 options.add_argument('--disable-blink-features=AutomationControlled')
 userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
 options.add_argument(f"--user-data-dir={userdatadir}")
 options.add_argument("--window-size=920,1080")
 driver = uc.Chrome(options=options)
-
-
+def resetdriver():
+    driver = uc.Chrome(options=options)
+    return driver
 def site1(link):
     i = 1
     listt = []
@@ -270,7 +271,9 @@ for i in range(len(result)):
     print("site 2 done")
     outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
-    dataOut(outList,i)
+    dataOut(outList,i)  
+    driver.quit()
+    driver=resetdriver()
 
 
 
