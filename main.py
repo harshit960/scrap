@@ -5,8 +5,8 @@ from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
+from selenium import webdriver
 from pathlib import Path
-
 def slugify(s):
   s = s.lower().strip()
   s = re.sub(r'[^\w\s-]', '', s)
@@ -44,10 +44,10 @@ def out(listt):
     f.close()
 
 
-options = uc.ChromeOptions()
-options.add_argument("--blink-settings=imagesEnabled=false")
-setproxy(options)
-driver = uc.Chrome(options=options)
+#options = webdriver.ChromeOptions()
+# options.add_argument("--blink-settings=imagesEnabled=false")
+#setproxy(options)
+driver = uc.Chrome()
 
 
 def site1(link):
@@ -106,15 +106,13 @@ def site1(link):
 def site2(link):
     listt = []
     plistt = []
-    pilistt = []
-    mqlistt = []
     blistt = []
     total=[]
     linkk=[]
     outdata = {}
-    k = True
     driver.get(link)
     time.sleep(1)
+    input("")
     element = driver.find_elements(By.CLASS_NAME, "item-link")
     prezzo = driver.find_elements(
         By.XPATH, "//div[@class='price-row']/span[@class='item-price h2-simulated']"
@@ -259,11 +257,11 @@ result = read_excel_file(filename)
 
 for i in range(len(result)):
     outList = []
-    outList.append(site1(result[i]["Link 1"]))
+    #outList.append(site1(result[i]["Link 1"]))
     print("site 1 done")
     outList.append(site2(result[i]["Link 2"]))
     print("site 2 done")
-    outList.append(site3(result[i]["Link 3"]))
+    #outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
     dataOut(outList,i)
 
