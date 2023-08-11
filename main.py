@@ -54,6 +54,13 @@ options.add_argument(f"--user-data-dir={userdatadir}")
 options.add_argument("--window-size=920,1080")
 driver = uc.Chrome(options=options)
 def resetdriver():
+    options = webdriver.ChromeOptions()
+    # options.add_argument("--blink-settings=imagesEnabled=false")
+    setproxy(options)
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
+    options.add_argument(f"--user-data-dir={userdatadir}")
+    options.add_argument("--window-size=920,1080")
     driver = uc.Chrome(options=options)
     return driver
 def site1(link):
