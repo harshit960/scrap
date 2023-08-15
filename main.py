@@ -47,10 +47,10 @@ def out(listt):
 options = webdriver.ChromeOptions()
 # options.add_argument("--blink-settings=imagesEnabled=false")
 setproxy(options)
-name=input("Enter name: ")
+#name=input("Enter name: ")
 options.add_argument('--disable-blink-features=AutomationControlled')
-userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
-options.add_argument(f"--user-data-dir={userdatadir}")
+#userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
+#options.add_argument(f"--user-data-dir={userdatadir}")
 options.add_argument("--window-size=920,1080")
 driver = uc.Chrome(options=options)
 def resetdriver():
@@ -58,8 +58,8 @@ def resetdriver():
     # options.add_argument("--blink-settings=imagesEnabled=false")
     setproxy(options)
     options.add_argument('--disable-blink-features=AutomationControlled')
-    userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
-    options.add_argument(f"--user-data-dir={userdatadir}")
+    #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
+    #options.add_argument(f"--user-data-dir={userdatadir}")
     options.add_argument("--window-size=920,1080")
     driver = uc.Chrome(options=options)
     return driver
