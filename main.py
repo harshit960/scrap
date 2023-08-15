@@ -279,8 +279,9 @@ for i in range(len(result)):
     outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
     dataOut(outList,i)  
-driver.resetdriver()
-driver.quit()
+    driver.quit()
+    if i != len(result)-1:
+        driver=resetdriver()
 
 
 
