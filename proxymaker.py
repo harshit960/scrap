@@ -4,7 +4,7 @@ def setproxy(chrome_options):
     try:
         with open("proxy.txt", "r") as file:
             proxies = file.readlines()  # Read all lines from the file
-            proxy = random.choice(proxies).strip()  # Select a random proxy
+            proxy = random.choice(proxies).replace('\n','').strip()  # Select a random proxy
     except FileNotFoundError:
         proxy = None  # Set proxy as None if file not found
     except Exception as e:
@@ -13,5 +13,5 @@ def setproxy(chrome_options):
 
     if proxy:
         print("using proxy ",proxy)
-        chrome_options.add_argument(f'--proxy-server=http://{proxy}')
+        chrome_options.add_argument(f"--proxy-server={proxy}")
 
