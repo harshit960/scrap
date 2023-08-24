@@ -90,9 +90,7 @@ def site1(link):
     # link2="https://www.immobiliare.it/search-list/?vrt=43.544699%2C10.304929%3B43.544123%2C10.304704%3B43.544131%2C10.304028%3B43.54648%2C10.304511%3B43.547179%2C10.304414%3B43.547498%2C10.306882%3B43.547397%2C10.309414%3B43.547164%2C10.310519%3B43.546495%2C10.310905%3B43.544893%2C10.305927%3B43.54466%2C10.305283%3B43.544699%2C10.304929&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
     driver.get(link)
     time.sleep(1)
-    btn=driver.find_element(By.CSS_SELECTOR,".nd-dialogFrame__close")
-    if(btn):
-        btn.click()
+  
     element = driver.find_elements(By.CSS_SELECTOR, ".in-card__title")
     bagina = driver.find_elements(By.CSS_SELECTOR, ".nd-list .nd-list--pipe")
     prezzo = driver.find_elements(By.CSS_SELECTOR,'.in-realEstateListCard__priceOnTop')
