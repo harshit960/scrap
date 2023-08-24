@@ -7,6 +7,9 @@ from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
 from selenium import webdriver
 from pathlib import Path
+import chromedriver_autoinstaller
+chromedriver_autoinstaller.install()  
+
 def slugify(s):
   s = s.lower().strip()
   s = re.sub(r'[^\w\s-]', '', s)
@@ -64,7 +67,7 @@ options.add_argument('--disable-blink-features=AutomationControlled')
 #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
 #options.add_argument(f"--user-data-dir={userdatadir}")
 options.add_argument("--window-size=920,1080")
-driver = init_uc_browser()
+
 def resetdriver():
     options = webdriver.ChromeOptions()
     # options.add_argument("--blink-settings=imagesEnabled=false")
@@ -73,8 +76,9 @@ def resetdriver():
     #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
     #options.add_argument(f"--user-data-dir={userdatadir}")
     options.add_argument("--window-size=920,1080")
-    driver = uc.Chrome(options=options)
+    driver =webdriver.Chrome(options=options)
     return driver
+driver = resetdriver()
 def site1(link):
     i = 1
     listt = []
@@ -296,7 +300,7 @@ for i in range(len(result)):
     dataOut(outList,i)  
     driver.quit()
     if i != len(result)-1:
-        driver=init_uc_browser()
+        driver=resetdriver()
 
 
 
