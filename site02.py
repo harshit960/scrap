@@ -1,77 +1,82 @@
-import time
-
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+import time
+import re
 from selenium.webdriver.common.by import By
-import undetected_chromedriver as uc
 
-driver = uc.ChromeOptions()
-PROXY = "34.154.161.152:80"
+def site2(link):
+    options = Options()
+    options.add_argument('--proxy-server=socks5://127.0.0.1:9050')  # Use Tor's SOCKS proxy
 
-#driver.add_argument('--proxy-server=%s' % PROXY)
-driver.add_argument('--blink-settings=imagesEnabled=false')
+    # Initialize the WebDriver with Chrome
+    driver = webdriver.Chrome(options=options)
 
-driver = uc.Chrome(options=driver)
-#driver.implicitly_wait(3)
+    # Example usage: open a website
 
-
-
-
-
-i=1
-listt=[]
-plistt=[]
-pilistt=[]
-mqlistt=[]
-blistt=[]
-linkk=[]
-data ={"name":listt,"prezzo":plistt,"piano":pilistt,"mq":mqlistt,"bagina":blistt}
-outdata={}
-k=True
-while(k):
-    # link="https://www.immobiliare.it/search-list/?vrt=43.54805%2C10.311828%3B43.548385%2C10.311527%3B43.547864%2C10.310111%3B43.547693%2C10.310959%3B43.547374%2C10.311184%3B43.547125%2C10.31054%3B43.546518%2C10.310873%3B43.547047%2C10.312589%3B43.547856%2C10.312032%3B43.54805%2C10.311828&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
-    link2= "https://www.idealista.it/aree/vendita-case/con-aste_no/lista-"+str(i)+"?ordine=area-asc&shape=%28%28%7DnzhGul%7C%7D%40cGqb%40%7C%40%7B%40vOhJdAh%40h%40h%40FjLsDbAAbCsGzB%29%29"
-    driver.get(link2)
+    listt = []
+    plistt = []
+    blistt = []
+    total=[]
+    linkk=[]
+    outdata = {}
+    driver.get(link)
     time.sleep(1)
-    element = driver.find_elements(By.CLASS_NAME, 'item-link')
-    prezzo = driver.find_elements(By.XPATH,"//div[@class='price-row']/span[@class='item-price h2-simulated']")
-    piano = driver.find_elements(By.XPATH,"//div[@class='item-detail-char']/span[1]")
-    mq = driver.find_elements(By.XPATH,"//div[@class='item-detail-char']/span[2]")
-    bagina =driver.find_elements(By.XPATH,"//div[@class='item-detail-char']/span[3]")
-    i = i+1                                       
+    input("Press Enter")
+    element = driver.find_elements(By.CLASS_NAME, "item-link")
+    prezzo = driver.find_elements(
+        By.XPATH, "//div[@class='price-row']/span[@class='item-price h2-simulated']"
+    )
+    piano = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[1]")
+    mq = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[2]")
+    bagina = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[3]")
+    container = driver.find_elements(By.CSS_SELECTOR, ".item-info-container")
+
     for x in element:
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
     for y in prezzo:
         plistt.append(y.text)
-    for z in piano:
-        pilistt.append(z.text)
-    for p in mq:
-        mqlistt.append(p.text)
-    for q in bagina:
-        blistt.append(q.text)
-    
-         
-    if(len(element) < 30):
-        break
-    
-driver.close()
-# print(data)
-# print(len(listt))
-# print(len(plistt))
-# print(len(pilistt))
-# print(len(mqlistt))
-# print(len(blistt))
-for i in range(len(listt)):
-    templistt=[]
-    templistt.append(listt[i])
-    templistt.append(plistt[i])
-    templistt.append(pilistt[i])
-    templistt.append(mqlistt[i])
-    templistt.append(blistt[i])
-    templistt.append(linkk[i])
-    outdata[i]=templistt
+    for r in container:
+        rawTxt=r.text
+        total.append(rawTxt.split("\n"))
+            
+    if len(listt)==len(total):
+        for i in range(len(listt)):
+            templistt = []
+            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
+            
+            #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+            #templistt.append(listt[i])
+            #templistt.append(plistt[i])
+            #templistt.append(pilistt[i])
+            #templistt.append(mqlistt[i])
+            # #templistt.append(blistt[i])
+            # templistt.append(total[i][1])
+            # templistt.append(total[i][2])
+            pat=r"(\w+)\s+m2(.*)"
+            mq=re.search(pat,total[i][2])
+            # print(mq)
+            # if mq:
+            #     templistt.append(mq.group(1))
+            #     templistt.append(mq.group(2))
+            # templistt.append(linkk[i])
+            # outdata[i] = templistt
 
-print(outdata)
+            dictt[1]=listt[i]
+            dictt[3]=total[i][1]
+            if mq:
+                dictt[2]=mq.group(1)
+                dictt[7]=mq.group(2)
+                dictt[8]=mq.group(2)
+            dictt[13]=linkk[i]
+            outdata[i]=dictt
+        return outdata
+    else:
+        
+        print(len(listt))
+        print(len(blistt))
 
+    # Do your automation tasks here
 
+    # Close the browser when done
+    driver.quit()
