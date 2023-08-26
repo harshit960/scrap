@@ -289,11 +289,11 @@ result = read_excel_file(filename)
 
 for i in range(len(result)):
     outList = []
-    outList.append(site1(result[i]["Link 1"]))
+    # outList.append(site1(result[i]["Link 1"]))
     print("site 1 done")
     outList.append(site2(result[i]["Link 2"]))
     print("site 2 done")
-    outList.append(site3(result[i]["Link 3"]))
+    # outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
     dataOut(outList,i)  
     driver.quit()
