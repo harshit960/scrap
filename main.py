@@ -10,6 +10,8 @@ from pathlib import Path
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()  
 
+
+
 def slugify(s):
   s = s.lower().strip()
   s = re.sub(r'[^\w\s-]', '', s)
@@ -38,8 +40,6 @@ def read_excel_file(filename):
 
     return data_list
     
-
-
 def out(listt):
     f = open("out.txt", "w+")
     for i in listt:
@@ -61,7 +61,7 @@ def init_uc_browser():
 
 options = webdriver.ChromeOptions()
 # options.add_argument("--blink-settings=imagesEnabled=false")
-setproxy(options)
+# setproxy(options)
 #name=input("Enter name: ")
 options.add_argument('--disable-blink-features=AutomationControlled')
 #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
