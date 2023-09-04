@@ -5,7 +5,8 @@ from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
-from selenium import webdriver
+# from selenium import webdriver
+from zyte_smartproxy_selenium import webdriver
 from pathlib import Path
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()  
@@ -53,9 +54,9 @@ def init_uc_browser():
             "profile.password_manager_enabled": False, 
             "credentials_enable_service": False,
             }
-        setproxy(options)
+        # setproxy(options)
         options.add_experimental_option("prefs", prefs)
-        driver = uc.Chrome(use_subprocess=True, options=options)
+        driver = uc.Chrome(spm_options={'spm_apikey': 'a200d06ff02746e1a379f93870d05b6c'},use_subprocess=True, options=options)
         return driver
 
 
@@ -71,12 +72,12 @@ options.add_argument("--window-size=920,1080")
 def resetdriver():
     options = webdriver.ChromeOptions()
     # options.add_argument("--blink-settings=imagesEnabled=false")
-    setproxy(options)
+    # setproxy(options)
     options.add_argument('--disable-blink-features=AutomationControlled')
     #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
     #options.add_argument(f"--user-data-dir={userdatadir}")
     options.add_argument("--window-size=920,1080")
-    driver =webdriver.Chrome(options=options)
+    driver =webdriver.Chrome(spm_options={'spm_apikey': 'a200d06ff02746e1a379f93870d05b6c'},options=options)
     return driver
 driver = resetdriver()
 def site1(link):
@@ -289,11 +290,11 @@ result = read_excel_file(filename)
 
 for i in range(len(result)):
     outList = []
-    # outList.append(site1(result[i]["Link 1"]))
+    outList.append(site1(result[i]["Link 1"]))
     print("site 1 done")
     outList.append(site2(result[i]["Link 2"]))
     print("site 2 done")
-    # outList.append(site3(result[i]["Link 3"]))
+    outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
     dataOut(outList,i)  
     driver.quit()
