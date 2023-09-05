@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import re
+import keyboard
 from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -8,10 +9,18 @@ import undetected_chromedriver as uc
 # from selenium import webdriver
 from zyte_smartproxy_selenium import webdriver
 from pathlib import Path
+
+
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()  
 
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+# capa = DesiredCapabilities.CHROME
+# capa["pageLoadStrategy"] = "none"
 
+st = 1
 
 def slugify(s):
   s = s.lower().strip()
@@ -55,8 +64,9 @@ def init_uc_browser():
             "credentials_enable_service": False,
             }
         # setproxy(options)
+        options.page_load_strategy = 'none'
         options.add_experimental_option("prefs", prefs)
-        driver = uc.Chrome(spm_options={'spm_apikey': 'a200d06ff02746e1a379f93870d05b6c'},use_subprocess=True, options=options)
+        driver = uc.Chrome(use_subprocess=True, options=options)
         return driver
 
 
@@ -64,20 +74,26 @@ options = webdriver.ChromeOptions()
 # options.add_argument("--blink-settings=imagesEnabled=false")
 # setproxy(options)
 #name=input("Enter name: ")
+options.page_load_strategy = 'none'
 options.add_argument('--disable-blink-features=AutomationControlled')
 #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
 #options.add_argument(f"--user-data-dir={userdatadir}")
-options.add_argument("--window-size=920,1080")
+options.add_argument("--window-size=1025,1080")
 
 def resetdriver():
     options = webdriver.ChromeOptions()
     # options.add_argument("--blink-settings=imagesEnabled=false")
     # setproxy(options)
+    options.page_load_strategy = 'none'
     options.add_argument('--disable-blink-features=AutomationControlled')
     #userdatadir = f'C:/Users/{name}/AppData/Local/Google/Chrome/User Data'
     #options.add_argument(f"--user-data-dir={userdatadir}")
-    options.add_argument("--window-size=920,1080")
-    driver =webdriver.Chrome(spm_options={'spm_apikey': 'a200d06ff02746e1a379f93870d05b6c'},options=options)
+    options.add_argument("--window-size=1025,1080")
+    if st == 2:
+        driver =webdriver.Chrome(spm_options={'spm_apikey': 'a200d06ff02746e1a379f93870d05b6c'},options=options)
+    else:
+        options.add_argument("--blink-settings=imagesEnabled=false")
+        driver =webdriver.Chrome(options=options)
     return driver
 driver = resetdriver()
 def site1(link):
@@ -89,9 +105,13 @@ def site1(link):
     outdata = {}
     # link="https://www.immobiliare.it/search-list/?vrt=43.54805%2C10.311828%3B43.548385%2C10.311527%3B43.547864%2C10.310111%3B43.547693%2C10.310959%3B43.547374%2C10.311184%3B43.547125%2C10.31054%3B43.546518%2C10.310873%3B43.547047%2C10.312589%3B43.547856%2C10.312032%3B43.54805%2C10.311828&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
     # link2="https://www.immobiliare.it/search-list/?vrt=43.544699%2C10.304929%3B43.544123%2C10.304704%3B43.544131%2C10.304028%3B43.54648%2C10.304511%3B43.547179%2C10.304414%3B43.547498%2C10.306882%3B43.547397%2C10.309414%3B43.547164%2C10.310519%3B43.546495%2C10.310905%3B43.544893%2C10.305927%3B43.54466%2C10.305283%3B43.544699%2C10.304929&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
+    
+    wait = WebDriverWait(driver, 40)
     driver.get(link)
     time.sleep(1)
-  
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.nd-list .nd-list--pipe')))
+
+    
     element = driver.find_elements(By.CSS_SELECTOR, ".in-card__title")
     bagina = driver.find_elements(By.CSS_SELECTOR, ".nd-list .nd-list--pipe")
     prezzo = driver.find_elements(By.CSS_SELECTOR,'.in-realEstateListCard__priceOnTop')
@@ -130,7 +150,7 @@ def site1(link):
         print(len(listt))
         print(len(blistt))
     # driver.close()
-    
+    driver.execute_script("window.stop();")
     return outdata
 
 
@@ -141,9 +161,19 @@ def site2(link):
     total=[]
     linkk=[]
     outdata = {}
+    wait = WebDriverWait(driver,60)
     driver.get(link)
-    time.sleep(1)
-    input("Press Enter")
+    time.sleep(1) 
+    wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='item-detail-char']/span[2]")))
+
+    while True:
+        if keyboard.is_pressed("enter"):
+            break  # Exit the loop if a key is pressed
+        else:
+            time.sleep(0.5)
+            print("PRESS ENTER")
+
+
     element = driver.find_elements(By.CLASS_NAME, "item-link")
     prezzo = driver.find_elements(
         By.XPATH, "//div[@class='price-row']/span[@class='item-price h2-simulated']"
@@ -192,11 +222,13 @@ def site2(link):
                 dictt[8]=mq.group(2)
             dictt[13]=linkk[i]
             outdata[i]=dictt
+
         return outdata
     else:
         
         print(len(listt))
         print(len(blistt))
+    driver.execute_script("window.stop();")
 
 
 def site3(link):
@@ -210,9 +242,17 @@ def site3(link):
 
     outdata = {}
     k = True
+    # wait = WebDriverWait(driver, 60)
     driver.get(link)
     time.sleep(1)
-    input("Press Enter")
+    # wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='art-infos is-clickable']")))
+
+    while True:
+        if keyboard.is_pressed("enter"):
+            break  # Exit the loop if a key is pressed
+        else:
+            time.sleep(0.5)
+            print("PRESS ENTER")
 
     element = driver.find_elements(
         By.XPATH,
@@ -274,6 +314,8 @@ def site3(link):
             dictt[3]=str(total[i][0])+" "+str(total[i][1])
             dictt[8]=linkk[i]
             outdata[i]=dictt
+        # driver.execute_script("window.stop();")
+        
         return outdata
     else:
         
@@ -290,12 +332,17 @@ result = read_excel_file(filename)
 
 for i in range(len(result)):
     outList = []
+    st=1
     outList.append(site1(result[i]["Link 1"]))
     print("site 1 done")
+    st=2
+    driver.quit()
+    driver=resetdriver()
     outList.append(site2(result[i]["Link 2"]))
     print("site 2 done")
     outList.append(site3(result[i]["Link 3"]))
     print("site 3 done")
+    st=1
     dataOut(outList,i)  
     driver.quit()
     if i != len(result)-1:
