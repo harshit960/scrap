@@ -242,10 +242,10 @@ def site3(link):
 
     outdata = {}
     k = True
-    # wait = WebDriverWait(driver, 60)
+    wait = WebDriverWait(driver, 60)
     driver.get(link)
     time.sleep(1)
-    # wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='art-infos is-clickable']")))
+    wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")))
 
     while True:
         if keyboard.is_pressed("enter"):
