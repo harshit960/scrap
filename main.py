@@ -256,18 +256,18 @@ def site3(link):
 
     element = driver.find_elements(
         By.XPATH,
-        "//a[@class = 'art-addr__txt art-addr__txt--a c-txt--f0 tp-w--m tp-s--m']",
+        "//a[@class='csaSrpcard__det__title--a c-txt--f0']",
     )
-    prezzo = driver.find_elements(By.XPATH, "//p[@class='c-txt--f0']")
+    prezzo = driver.find_elements(By.XPATH, "//div//span[@class='csaSrpcard__det__feats--price tp-w--l']")
     piano = driver.find_elements(
         By.XPATH,
         "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[1]",
     )
     mq = driver.find_elements(
         By.XPATH,
-        "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[2]",
+        "//div[contains(@class,'grid-item grid-item grid-item--behavior-fixed')]/p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']",
     )
-    container = driver.find_elements(By.XPATH, "//div[@class='art-infos is-clickable']")
+    container = driver.find_elements(By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")
 
     for x in element:
         listt.append(x.text)
