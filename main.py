@@ -184,7 +184,7 @@ def site2(link):
         if keyboard.is_pressed("enter"):
             break  # Exit the loop if a key is pressed
         else:
-            time.sleep(0.5)
+            time.sleep(2)
             print("PRESS ENTER")
 
 
@@ -265,7 +265,7 @@ def site3(link):
         if keyboard.is_pressed("enter"):
             break  # Exit the loop if a key is pressed
         else:
-            time.sleep(0.5)
+            time.sleep(2)
             print("PRESS ENTER")
 
     element = driver.find_elements(
