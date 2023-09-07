@@ -106,7 +106,7 @@ def site1(link):
     # link="https://www.immobiliare.it/search-list/?vrt=43.54805%2C10.311828%3B43.548385%2C10.311527%3B43.547864%2C10.310111%3B43.547693%2C10.310959%3B43.547374%2C10.311184%3B43.547125%2C10.31054%3B43.546518%2C10.310873%3B43.547047%2C10.312589%3B43.547856%2C10.312032%3B43.54805%2C10.311828&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
     # link2="https://www.immobiliare.it/search-list/?vrt=43.544699%2C10.304929%3B43.544123%2C10.304704%3B43.544131%2C10.304028%3B43.54648%2C10.304511%3B43.547179%2C10.304414%3B43.547498%2C10.306882%3B43.547397%2C10.309414%3B43.547164%2C10.310519%3B43.546495%2C10.310905%3B43.544893%2C10.305927%3B43.54466%2C10.305283%3B43.544699%2C10.304929&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
     
-    wait = WebDriverWait(driver, 40)
+    wait = WebDriverWait(driver, 120)
     driver.get(link)
     time.sleep(1)
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.nd-list .nd-list--pipe')))
@@ -161,7 +161,7 @@ def site2(link):
     total=[]
     linkk=[]
     outdata = {}
-    wait = WebDriverWait(driver,60)
+    wait = WebDriverWait(driver,120)
     driver.get(link)
     time.sleep(1) 
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='item-detail-char']/span[2]")))
@@ -242,7 +242,7 @@ def site3(link):
 
     outdata = {}
     k = True
-    wait = WebDriverWait(driver, 60)
+    wait = WebDriverWait(driver, 120)
     driver.get(link)
     time.sleep(1)
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")))
