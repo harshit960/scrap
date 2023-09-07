@@ -22,6 +22,20 @@ from selenium.webdriver.support import expected_conditions as EC
 
 st = 1
 
+def read_api_key(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            api_key = file.readline().strip()
+            return api_key
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
+
+file_path = "key.txt"  # Change this to the path of your API key file
+    
+api_key = read_api_key(file_path)
+
+
 def slugify(s):
   s = s.lower().strip()
   s = re.sub(r'[^\w\s-]', '', s)
@@ -90,7 +104,7 @@ def resetdriver():
     #options.add_argument(f"--user-data-dir={userdatadir}")
     options.add_argument("--window-size=1025,1080")
     if st == 2:
-        driver =webdriver.Chrome(spm_options={'spm_apikey': 'a200d06ff02746e1a379f93870d05b6c'},options=options)
+        driver =webdriver.Chrome(spm_options={'spm_apikey': api_key},options=options)
     else:
         options.add_argument("--blink-settings=imagesEnabled=false")
         driver =webdriver.Chrome(options=options)
@@ -329,6 +343,8 @@ timee=str(slugify(time.ctime(time.time())))
 result = read_excel_file(filename)
 #print(result)
 # print(result["Link 1"])
+
+
 
 for i in range(len(result)):
     outList = []
