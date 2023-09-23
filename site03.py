@@ -49,7 +49,7 @@ while k:
     )
     mq = driver.find_elements(
         By.XPATH,
-        "//div[contains(@class,'grid-item grid-item grid-item--behavior-fixed')]/p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']",
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]",
     )
     i = i + 1
 
