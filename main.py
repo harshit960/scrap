@@ -153,10 +153,10 @@ def site1(link):
             dictt[1]=listt[i]
             dictt[2]=b[1]
             dictt[3]=prezzos[i]
-            dictt[7]=b[3]
+            dictt[9]=b[3]
             
             if len(b) >= 5:
-                dictt[9]=b[4]
+                dictt[7]=b[4]
             
             dictt[13]=linkk[i]
             outdata[i]=dictt
@@ -180,12 +180,7 @@ def site2(link):
     time.sleep(1) 
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='item-detail-char']/span[2]")))
 
-    while True:
-        if keyboard.is_pressed("enter"):
-            break  # Exit the loop if a key is pressed
-        else:
-            time.sleep(2)
-            print("PRESS ENTER")
+    
 
 
     element = driver.find_elements(By.CLASS_NAME, "item-link")
@@ -261,12 +256,7 @@ def site3(link):
     time.sleep(1)
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")))
 
-    while True:
-        if keyboard.is_pressed("enter"):
-            break  # Exit the loop if a key is pressed
-        else:
-            time.sleep(2)
-            print("PRESS ENTER")
+    
 
     element = driver.find_elements(
         By.XPATH,
@@ -326,7 +316,7 @@ def site3(link):
             dictt[1]=listt[i]
             dictt[2]=total[i][2]
             dictt[3]=str(total[i][0])+" "+str(total[i][1])
-            dictt[8]=linkk[i]
+            dictt[13]=linkk[i]
             outdata[i]=dictt
         # driver.execute_script("window.stop();")
         
