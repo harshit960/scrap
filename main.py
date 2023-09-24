@@ -246,6 +246,8 @@ def site3(link):
     pilistt = []
     mqlistt = []
     blistt = []
+    floorlist = []
+    elevatlist = []
     linkk=[]
     total = []
 
@@ -271,6 +273,15 @@ def site3(link):
         By.XPATH,
         "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]",
     )
+    elevator = driver.find_elements(
+        By.XPATH,
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[3]"
+    )
+
+    floor = driver.find_elements(
+        By.XPATH,
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[4]"
+    )
     container = driver.find_elements(By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")
 
     for x in element:
@@ -282,6 +293,10 @@ def site3(link):
         pilistt.append(z.text)
     for p in mq:
         mqlistt.append(p.text)
+    for a in elevator:
+        elevatlist.append(a.text)
+    for o in floor:
+        floorlist.append(o.text)
     for r in container:
         rawTxt=r.text
         

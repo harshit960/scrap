@@ -26,6 +26,8 @@ listt = []
 plistt = []
 pilistt = []
 mqlistt = []
+elevatlist = []
+floorlist = []
 linkk=[]
 outdata = {}
 data = {"name": listt, "prezzo": plistt, "piano": pilistt, "mq": mqlistt}
@@ -40,16 +42,25 @@ while k:
     # time.sleep(25)
     element = driver.find_elements(
         By.XPATH,
-        "//a[@class='csaSrpcard__det__title--a c-txt--f0']",
+        "//a[@class='csaSrpcard__det__title--a c-txt--f0']"
     )
     prezzo = driver.find_elements(By.XPATH, "//div//span[@class='csaSrpcard__det__feats--price tp-w--l']")
     piano = driver.find_elements(
         By.XPATH,
-        "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[1]",
+        "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[1]"
     )
     mq = driver.find_elements(
         By.XPATH,
-        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]",
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]"
+    )
+    elevator = driver.find_elements(
+        By.XPATH,
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[3]"
+    )
+
+    floor = driver.find_elements(
+        By.XPATH,
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[4]"
     )
     i = i + 1
 
@@ -62,6 +73,10 @@ while k:
         pilistt.append(z.text)
     for p in mq:
         mqlistt.append(p.text)
+    for a in elevator:
+        elevatlist.append(a.text)
+    for o in floor:
+        floorlist.append(o.text)
     for i in range(10):
         driver.execute_script("window.scrollBy(0,400)", "")
         time.sleep(0.1)
@@ -82,6 +97,8 @@ for i in range(len(listt)):
     templistt.append(plistt[i])
     templistt.append(pilistt[i])
     templistt.append(mqlistt[i])
+    templistt.append(elevatlist[i])
+    templistt.append(floorlist[i])
     templistt.append(linkk[i])
     # templistt.append(blistt[i])
     outdata[i] = templistt
