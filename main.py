@@ -299,19 +299,9 @@ def site3(link):
         floorlist.append(o.text)
     for r in container:
         rawTxt=r.text
-        
+        # print(rawTxt)
         total.append(rawTxt.split("\n"))
 
-    # driver.close()
-
-    # for i in range(len(listt)):
-    #     templistt = []
-    #     templistt.append(listt[i])
-    #     templistt.append(linkk[i])
-    #     templistt.append(plistt[i])
-    #     templistt.append(pilistt[i])
-    #     templistt.append(mqlistt[i])
-    #     outdata[i] = templistt
 
     if len(listt)==len(total):
         for i in range(len(listt)):
@@ -329,8 +319,10 @@ def site3(link):
             # templistt.append(linkk[i])
             # outdata[i] = templistt
             dictt[1]=listt[i]
-            dictt[2]=total[i][2]
-            dictt[3]=str(total[i][0])+" "+str(total[i][1])
+            dictt[2]=total[i][4]
+            dictt[3]=str(total[i][3])
+            dictt[7]=str(total[i][7])
+            dictt[9]=str(total[i][6])
             dictt[13]=linkk[i]
             outdata[i]=dictt
         # driver.execute_script("window.stop();")
