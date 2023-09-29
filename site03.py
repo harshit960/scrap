@@ -51,7 +51,7 @@ while k:
     )
     mq = driver.find_elements(
         By.XPATH,
-        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]"
+        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]/font[1]/font[@style='vertical-align: inherit;']"
     )
     elevator = driver.find_elements(
         By.XPATH,
@@ -68,7 +68,7 @@ while k:
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
     for y in prezzo:
-        plistt.append(y.text)
+        plistt.append(int(y.text))
     for z in piano:
         pilistt.append(z.text)
     for p in mq:
