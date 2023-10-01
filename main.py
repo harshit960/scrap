@@ -1,7 +1,7 @@
 import time
 import pandas as pd
 import re
-import keyboard
+import math
 from proxymaker import setproxy
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -288,7 +288,7 @@ def site3(link):
         listt.append(x.text)
         linkk.append(x.get_attribute("href"))
     for y in prezzo:
-        plistt.append(int(y.text))
+        plistt.append(y.text)
     for z in piano:
         pilistt.append(z.text)
     for p in mq:
@@ -319,8 +319,9 @@ def site3(link):
             # templistt.append(linkk[i])
             # outdata[i] = templistt
             dictt[1]=listt[i]
-            dictt[2]=total[i][4]
-            dictt[3]=str(total[i][3])
+            priccc=total[i][4].split()
+            dictt[2]=priccc[0]
+            dictt[3]=math.trunc(float(total[i][3]))
             dictt[7]=str(total[i][7])
             dictt[9]=str(total[i][6])
             dictt[13]=linkk[i]
@@ -350,7 +351,7 @@ for i in range(len(result)):
         outList.append(site1(result[i]["Link 1"]))
         print("site 1 done")
     except:
-        print("missing")
+        print("missing1")
     st=2
     driver.quit()
     driver=resetdriver()
@@ -358,12 +359,13 @@ for i in range(len(result)):
         outList.append(site2(result[i]["Link 2"]))
         print("site 2 done")
     except:
-        print("missing")
+        print("missing2")
     try:
         outList.append(site3(result[i]["Link 3"]))
         print("site 3 done")
     except:
-        print("missing")
+        print("")
+        print("missing3")
     st=1
     dataOut(outList,i)  
     driver.quit()
