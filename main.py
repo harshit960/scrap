@@ -112,57 +112,81 @@ def resetdriver():
 driver = resetdriver()
 def site1(link):
     i = 1
-    listt = []
-    blistt = []
-    prezzos=[]
-    linkk=[]
-    outdata = {}
-    # link="https://www.immobiliare.it/search-list/?vrt=43.54805%2C10.311828%3B43.548385%2C10.311527%3B43.547864%2C10.310111%3B43.547693%2C10.310959%3B43.547374%2C10.311184%3B43.547125%2C10.31054%3B43.546518%2C10.310873%3B43.547047%2C10.312589%3B43.547856%2C10.312032%3B43.54805%2C10.311828&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
-    # link2="https://www.immobiliare.it/search-list/?vrt=43.544699%2C10.304929%3B43.544123%2C10.304704%3B43.544131%2C10.304028%3B43.54648%2C10.304511%3B43.547179%2C10.304414%3B43.547498%2C10.306882%3B43.547397%2C10.309414%3B43.547164%2C10.310519%3B43.546495%2C10.310905%3B43.544893%2C10.305927%3B43.54466%2C10.305283%3B43.544699%2C10.304929&idContratto=1&idCategoria=1&tipoProprieta=1&criterio=superficie&ordine=asc&noAste=1&__lang=it&pag="+str(i)+"&slau=1"
-    
+    p_no=1
     wait = WebDriverWait(driver, 120)
-    driver.get(link)
-    time.sleep(1)
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.nd-list .nd-list--pipe')))
+    newLink = link+"&pag=1" 
+    outdata = {}
+    # Original URL
+    # You can modify the 'pag' parameter in the URL to change the page number
+    
 
     
-    element = driver.find_elements(By.CSS_SELECTOR, ".in-card__title")
-    bagina = driver.find_elements(By.CSS_SELECTOR, ".nd-list .nd-list--pipe")
-    prezzo = driver.find_elements(By.CSS_SELECTOR,'.in-realEstateListCard__priceOnTop')
-    for x in element:
-        listt.append(x.text)
-        linkk.append(x.get_attribute("href"))
-    for q in bagina:
-        blistt.append(q.text)
-    for p in prezzo:
-        prezzos.append(p.text)
-    # print(len(prezzos))
-    # print(len(listt))
-    # print(len(blistt))
-    if len(listt)==len(blistt):
-        for i in range(len(listt)):
-            temolistt = []
-            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
-            b = blistt[i].split("\n")
-            # temolistt.append(listt[i])
-            # temolistt.append(prezzos[i])
-            # temolistt.extend(b)
-            # print(b)
-            # temolistt.append(linkk[i])
-            # outdata[i] = temolistt
-            dictt[1]=listt[i]
-            dictt[2]=b[1]
-            dictt[3]=prezzos[i]
-            dictt[9]=b[3]
-            
-            if len(b) >= 5:
-                dictt[7]=b[4]
-            
-            dictt[13]=linkk[i]
-            outdata[i]=dictt
+    driver.get(newLink)
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.nd-list .nd-list--pipe')))
+    itemss= driver.find_element(By.XPATH,'//*[@id="__next"]/main/section[1]/div[1]/div[1]/div[1]')
+    if int(itemss.text[0:2])%25 != 0:
+        noOfPage=  int(int(itemss.text[0:2])/25)+1
     else:
+        noOfPage= int(int(itemss.text[0:2])/25)
+    print(noOfPage)
+
+    for page in range(noOfPage):
+        listt = []
+        blistt = []
+        prezzos=[]
+        linkk=[]
+        
+        new_page_number = page+1
+        url_parts = newLink.split('&pag=')
+        new_url = url_parts[0] + f'&pag={new_page_number}' + '&' + url_parts[1] if len(url_parts) > 1 else ''
+
+
+        driver.get(new_url)
+        time.sleep(1)
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.nd-list .nd-list--pipe')))
+
+        
+
+        element = driver.find_elements(By.CSS_SELECTOR, ".in-reListCard__title")
+        bagina = driver.find_elements(By.CSS_SELECTOR, ".nd-list .nd-list--pipe")
+        prezzo = driver.find_elements(By.CSS_SELECTOR,'.in-reListCardPrice')
+        for x in element:
+            # print(x.text)
+            listt.append(x.text)
+            linkk.append(x.get_attribute("href"))
+        for q in bagina:
+            blistt.append(q.text)
+        for p in prezzo:
+            prezzos.append(p.text)
+        print(len(prezzos))
         print(len(listt))
         print(len(blistt))
+        temodict = {}
+        if len(listt)==len(blistt):
+            for i in range(len(listt)):
+                dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
+                b = blistt[i].split("\n")
+                # temolistt.append(listt[i])
+                # temolistt.append(prezzos[i])
+                # temolistt.extend(b)
+                # print(b)
+                # temolistt.append(linkk[i])
+                # outdata[i] = temolistt
+                dictt[1]=listt[i]
+                dictt[2]=b[1]
+                dictt[3]=prezzos[i]
+                dictt[9]=b[3]
+                
+                if len(b) >= 5:
+                    dictt[7]=b[4]
+                
+                dictt[13]=linkk[i]
+                temodict[i+(page*25)]=dictt
+                
+        else:
+            print(len(listt))
+            print(len(blistt))
+        outdata.update(temodict)
     # driver.close()
     driver.execute_script("window.stop();")
     return outdata
@@ -350,18 +374,19 @@ for i in range(len(result)):
     try:
         outList.append(site1(result[i]["Link 1"]))
         print("site 1 done")
-    except:
+    except Exception as e:
         print("missing1")
+        print(e)
     st=2
     driver.quit()
     driver=resetdriver()
     try:
-        outList.append(site2(result[i]["Link 2"]))
+        # outList.append(site2(result[i]["Link 2"]))
         print("site 2 done")
-    except:
+    except :
         print("missing2")
     try:
-        outList.append(site3(result[i]["Link 3"]))
+        # outList.append(site3(result[i]["Link 3"]))
         print("site 3 done")
     except:
         print("")
