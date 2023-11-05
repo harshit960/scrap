@@ -372,7 +372,7 @@ for i in range(len(result)):
     outList = []
     st=1
     try:
-        # outList.append(site1(result[i]["Link 1"]))
+        outList.append(site1(result[i]["Link 1"]))
         print("site 1 done")
     except Exception as e:
         print("missing1")
