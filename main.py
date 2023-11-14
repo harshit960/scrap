@@ -193,170 +193,210 @@ def site1(link):
 
 
 def site2(link):
-    listt = []
-    plistt = []
-    blistt = []
-    total=[]
-    linkk=[]
     outdata = {}
     wait = WebDriverWait(driver,120)
+    # link = link.replace('/con-aste_no/', '/con-aste_no/lista-'+ str(n) )
     driver.get(link)
     time.sleep(1) 
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='item-detail-char']/span[2]")))
-
+    totalItems = driver.find_element(By.XPATH,'//*[@id="h1-container"]')
+    print(totalItems.text.split()[0])
     
-
-
-    element = driver.find_elements(By.CLASS_NAME, "item-link")
-    prezzo = driver.find_elements(
-        By.XPATH, "//div[@class='price-row']/span[@class='item-price h2-simulated']"
-    )
-    piano = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[1]")
-    mq = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[2]")
-    bagina = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[3]")
-    container = driver.find_elements(By.CSS_SELECTOR, ".item-info-container")
-    
-    for x in element:
-        listt.append(x.text)
-        linkk.append(x.get_attribute("href"))
-    for y in prezzo:
-        plistt.append(y.text)
-    for r in container:
-        rawTxt=r.text
-        total.append(rawTxt.split("\n"))
-            
-    if len(listt)==len(total):
-        for i in range(len(listt)):
-            templistt = []
-            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
-            
-            #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
-            #templistt.append(listt[i])
-            #templistt.append(plistt[i])
-            #templistt.append(pilistt[i])
-            #templistt.append(mqlistt[i])
-            # #templistt.append(blistt[i])
-            # templistt.append(total[i][1])
-            # templistt.append(total[i][2])
-            pat=r"(\w+)\s+m2(.*)"
-            mq=re.search(pat,total[i][2])
-            # print(mq)
-            # if mq:
-            #     templistt.append(mq.group(1))
-            #     templistt.append(mq.group(2))
-            # templistt.append(linkk[i])
-            # outdata[i] = templistt
-
-            dictt[1]=listt[i]
-            dictt[3]=total[i][1]
-            if mq:
-                dictt[2]=mq.group(1)
-                dictt[7]=mq.group(2)
-                dictt[8]=mq.group(2)
-            dictt[13]=linkk[i]
-            outdata[i]=dictt
-
-        return outdata
+    if int(totalItems.text.split()[0])%30 != 0:
+        noOfPage=  int(int(totalItems.text.split()[0])/30)+1
     else:
+        noOfPage= int(int(totalItems.text.split()[0])/30)
+    print(noOfPage)
+
+    for l in range(noOfPage):
+        listt = []
+        plistt = []
+        blistt = []
+        total=[]
+        linkk=[]
+        wait = WebDriverWait(driver,120)
+        nlink = link.replace('/con-aste_no/', '/con-aste_no/lista-'+ str(l + 1) )
+        driver.get(nlink)
+        time.sleep(1) 
+        wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='item-detail-char']/span[2]")))
+
         
-        print(len(listt))
-        print(len(blistt))
+        element = driver.find_elements(By.CLASS_NAME, "item-link")
+        prezzo = driver.find_elements(
+            By.XPATH, "//div[@class='price-row']/span[@class='item-price h2-simulated']"
+        )
+        piano = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[1]")
+        mq = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[2]")
+        bagina = driver.find_elements(By.XPATH, "//div[@class='item-detail-char']/span[3]")
+        container = driver.find_elements(By.CSS_SELECTOR, ".item-info-container")
+        
+        for x in element:
+            listt.append(x.text)
+            linkk.append(x.get_attribute("href"))
+        for y in prezzo:
+            plistt.append(y.text)
+        for r in container:
+            rawTxt=r.text
+            total.append(rawTxt.split("\n"))
+        tempDist ={}
+        if len(listt)==len(total):
+            for i in range(len(listt)):
+                templistt = []
+                dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
+                
+                #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+                #templistt.append(listt[i])
+                #templistt.append(plistt[i])
+                #templistt.append(pilistt[i])
+                #templistt.append(mqlistt[i])
+                # #templistt.append(blistt[i])
+                # templistt.append(total[i][1])
+                # templistt.append(total[i][2])
+                pat=r"(\w+)\s+m2(.*)"
+                mq=re.search(pat,total[i][2])
+                # print(mq)
+                # if mq:
+                #     templistt.append(mq.group(1))
+                #     templistt.append(mq.group(2))
+                # templistt.append(linkk[i])
+                # outdata[i] = templistt
+
+                dictt[1]=listt[i]
+                dictt[3]=total[i][1]
+                if mq:
+                    dictt[2]=mq.group(1)
+                    dictt[7]=mq.group(2)
+                    dictt[8]=mq.group(2)
+                dictt[13]=linkk[i]
+                tempDist[i+(l*25)]=dictt
+
+            # return outdata
+            outdata.update(tempDist)
+        else:
+        
+            print(len(listt))
+            print(len(blistt))
+
     driver.execute_script("window.stop();")
+    return outdata
 
 
 def site3(link):
-    listt = []
-    plistt = []
-    pilistt = []
-    mqlistt = []
-    blistt = []
-    floorlist = []
-    elevatlist = []
-    linkk=[]
-    total = []
+
 
     outdata = {}
-    k = True
     wait = WebDriverWait(driver, 120)
     driver.get(link)
     time.sleep(1)
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")))
-
     
-
-    element = driver.find_elements(
-        By.XPATH,
-        "//a[@class='csaSrpcard__det__title--a c-txt--f0']",
-    )
-    prezzo = driver.find_elements(By.XPATH, "//div//span[@class='csaSrpcard__det__feats--price tp-w--l']")
-    piano = driver.find_elements(
-        By.XPATH,
-        "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[1]",
-    )
-    mq = driver.find_elements(
-        By.XPATH,
-        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]/font[1]/font[@style='vertical-align: inherit;']",
-    )
-    elevator = driver.find_elements(
-        By.XPATH,
-        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[3]"
-    )
-
-    floor = driver.find_elements(
-        By.XPATH,
-        "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[4]"
-    )
-    container = driver.find_elements(By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")
-
-    for x in element:
-        listt.append(x.text)
-        linkk.append(x.get_attribute("href"))
-    for y in prezzo:
-        plistt.append(y.text)
-    for z in piano:
-        pilistt.append(z.text)
-    for p in mq:
-        mqlistt.append(p.text)
-    for a in elevator:
-        elevatlist.append(a.text)
-    for o in floor:
-        floorlist.append(o.text)
-    for r in container:
-        rawTxt=r.text
-        # print(rawTxt)
-        total.append(rawTxt.split("\n"))
-
-
-    if len(listt)==len(total):
-        for i in range(len(listt)):
-            templistt = []
-            #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
-            dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
-
-            # templistt.append(listt[i])
-            #templistt.append(plistt[i])
-            #templistt.append(pilistt[i])
-            #templistt.append(mqlistt[i])
-            #templistt.append(blistt[i])
-            # templistt.append(str(total[i][0])+" "+str(total[i][1]))
-            # templistt.append(total[i][2])
-            # templistt.append(linkk[i])
-            # outdata[i] = templistt
-            dictt[1]=listt[i]
-            priccc=total[i][4].split()
-            dictt[2]=priccc[0]
-            dictt[3]=math.trunc(float(total[i][3]))
-            dictt[7]=str(total[i][7])
-            dictt[9]=str(total[i][6])
-            dictt[13]=linkk[i]
-            outdata[i]=dictt
-        # driver.execute_script("window.stop();")
-        
-        return outdata
+    totalItems = driver.find_element(By.XPATH,'//*[@id="app"]/div/div[2]/div[1]/div[1]/h1')
+    print(totalItems.get_attribute('data-count'))
+    
+    if int(totalItems.get_attribute('data-count'))%20 != 0:
+        noOfPage=  int(int(totalItems.get_attribute('data-count'))/20)+1
     else:
+        noOfPage= int(int(totalItems.get_attribute('data-count'))/20)
+    print(noOfPage)
+
+    for l in range(noOfPage):
+
+
+        listt = []
+        plistt = []
+        pilistt = []
+        mqlistt = []
+        blistt = []
+        floorlist = []
+        elevatlist = []
+        linkk=[]
+        total = []
+
+        k = True
+        wait = WebDriverWait(driver, 120)
+        nlink = link + "&page=" + str(l+1)
+        driver.get(nlink)
+        time.sleep(1)
+        wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")))
+
         
-        print(len(listt))
-        print(len(blistt))
+
+        element = driver.find_elements(
+            By.XPATH,
+            "//a[@class='csaSrpcard__det__title--a c-txt--f0']",
+        )
+        prezzo = driver.find_elements(By.XPATH, "//div//span[@class='csaSrpcard__det__feats--price tp-w--l']")
+        piano = driver.find_elements(
+            By.XPATH,
+            "//div[@class='grid info-features__feats grid grid--align-flex-end grid--gutters-l']/div[1]",
+        )
+        mq = driver.find_elements(
+            By.XPATH,
+            "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[1]/font[1]/font[@style='vertical-align: inherit;']",
+        )
+        elevator = driver.find_elements(
+            By.XPATH,
+            "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[3]"
+        )
+
+        floor = driver.find_elements(
+            By.XPATH,
+            "//div//p[@class='csaSrpcard__det__feats__text csaSrpcard__det__feats__items tp-s--m tp-w--s c-txt--f0']/span[4]"
+        )
+        container = driver.find_elements(By.XPATH, "//div[@class='grid csaSrpcard__det__cont grid grid--direction-column']")
+
+        for x in element:
+            listt.append(x.text)
+            linkk.append(x.get_attribute("href"))
+        for y in prezzo:
+            plistt.append(y.text)
+        for z in piano:
+            pilistt.append(z.text)
+        for p in mq:
+            mqlistt.append(p.text)
+        for a in elevator:
+            elevatlist.append(a.text)
+        for o in floor:
+            floorlist.append(o.text)
+        for r in container:
+            rawTxt=r.text
+            # print(rawTxt)
+            total.append(rawTxt.split("\n"))
+        tempDict={}
+
+        if len(listt)==len(total):
+            for i in range(len(listt)):
+                templistt = []
+                #dictt={1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[]}
+                dictt={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:"",10:"",11:"",12:"",13:""}
+
+                # templistt.append(listt[i])
+                #templistt.append(plistt[i])
+                #templistt.append(pilistt[i])
+                #templistt.append(mqlistt[i])
+                #templistt.append(blistt[i])
+                # templistt.append(str(total[i][0])+" "+str(total[i][1]))
+                # templistt.append(total[i][2])
+                # templistt.append(linkk[i])
+                # outdata[i] = templistt
+                dictt[1]=listt[i]
+                priccc=total[i][4].split()
+                dictt[2]=priccc[0]
+                dictt[3]=math.trunc(float(total[i][3]))
+                dictt[7]=str(total[i][7])
+                dictt[9]=str(total[i][6])
+                dictt[13]=linkk[i]
+                tempDict[i+(l*25)]=dictt
+
+            outdata.update(tempDict)
+            # driver.execute_script("window.stop();")
+            
+        else:
+        
+            print(len(listt))
+            print(len(blistt))
+        
+    return outdata
 
 
 filename = "./files/input.xlsx"
