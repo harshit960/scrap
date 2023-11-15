@@ -111,7 +111,7 @@ def resetdriver():
     return driver
 driver = resetdriver()
 def site1(link):
-    i = 1
+    
     p_no=1
     wait = WebDriverWait(driver, 120)
     newLink = link+"&pag=1" 
@@ -124,6 +124,7 @@ def site1(link):
     driver.get(newLink)
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.nd-list .nd-list--pipe')))
     itemss= driver.find_element(By.XPATH,'//*[@id="__next"]/main/section[1]/div[1]/div[1]/div[1]')
+    print(itemss.text[0:2])
     if int(itemss.text[0:2])%25 != 0:
         noOfPage=  int(int(itemss.text[0:2])/25)+1
     else:
@@ -161,6 +162,7 @@ def site1(link):
         print(len(prezzos))
         print(len(listt))
         print(len(blistt))
+        print(len(linkk))
         temodict = {}
         if len(listt)==len(blistt):
             for i in range(len(listt)):
@@ -174,8 +176,9 @@ def site1(link):
                 # outdata[i] = temolistt
                 dictt[1]=listt[i]
                 dictt[2]=b[1]
-                dictt[3]=prezzos[i]
-                dictt[9]=b[3]
+                dictt[3]=prezzos[i].replace('.000','').replace('€','')
+                if len(b)>=4 :
+                    dictt[9]=b[3]
                 
                 if len(b) >= 5:
                     dictt[7]=b[4]
@@ -183,9 +186,11 @@ def site1(link):
                 dictt[13]=linkk[i]
                 temodict[i+(page*25)]=dictt
                 
+                
         else:
             print(len(listt))
             print(len(blistt))
+        
         outdata.update(temodict)
     # driver.close()
     driver.execute_script("window.stop();")
@@ -262,7 +267,7 @@ def site2(link):
                 # outdata[i] = templistt
 
                 dictt[1]=listt[i]
-                dictt[3]=total[i][1]
+                dictt[3]=total[i][1].replace('.000€','')
                 if mq:
                     dictt[2]=mq.group(1)
                     dictt[7]=mq.group(2)
@@ -417,6 +422,7 @@ for i in range(len(result)):
     except Exception as e:
         print("missing1")
         print(e)
+    
     st=2
     driver.quit()
     driver=resetdriver()
