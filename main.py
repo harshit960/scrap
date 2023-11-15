@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 import chromedriver_autoinstaller
-chromedriver_autoinstaller.install()  
+# chromedriver_autoinstaller.install()  
 
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
