@@ -244,6 +244,8 @@ def site2(link):
             rawTxt=r.text
             total.append(rawTxt.split("\n"))
         tempDist ={}
+        print(len(listt))
+        print(len(total))
         if len(listt)==len(total):
             for i in range(len(listt)):
                 templistt = []
@@ -273,7 +275,7 @@ def site2(link):
                     dictt[7]=mq.group(2)
                     dictt[8]=mq.group(2)
                 dictt[13]=linkk[i]
-                tempDist[i+(l*25)]=dictt
+                tempDist[i+(l*30)]=dictt
 
             # return outdata
             outdata.update(tempDist)
@@ -417,7 +419,7 @@ for i in range(len(result)):
     outList = []
     st=1
     try:
-        outList.append(site1(result[i]["Link 1"]))
+        # outList.append(site1(result[i]["Link 1"]))
         print("site 1 done")
     except Exception as e:
         print("missing1")
@@ -435,7 +437,7 @@ for i in range(len(result)):
         print(e)
 
     try:
-        outList.append(site3(result[i]["Link 3"]))
+        # outList.append(site3(result[i]["Link 3"]))
         print("site 3 done")
     except Exception as e:
         print("")
