@@ -242,6 +242,16 @@ def site2(link):
             plistt.append(y.text)
         for r in container:
             rawTxt=r.text
+            t=rawTxt.find('%')
+            e=rawTxt.find('€')
+            if t != -1:
+                r1=rawTxt[:e+1]
+                r2=rawTxt[t+1:]
+                rawTxt = r1 + r2
+                
+                # print("1:" + rawTxt)
+            # else:
+                # print("2:" + rawTxt)
             total.append(rawTxt.split("\n"))
         tempDist ={}
         print(len(listt))
@@ -259,6 +269,7 @@ def site2(link):
                 # #templistt.append(blistt[i])
                 # templistt.append(total[i][1])
                 # templistt.append(total[i][2])
+                print(total[i][2])
                 pat=r"(\w+)\s+m2(.*)"
                 mq=re.search(pat,total[i][2])
                 # print(mq)
@@ -428,13 +439,13 @@ for i in range(len(result)):
     st=2
     driver.quit()
     driver=resetdriver()
-    try:
-        outList.append(site2(result[i]["Link 2"]))
-        print("site 2 done")
+    
+    outList.append(site2(result[i]["Link 2"]))
+    print("site 2 done")
         
-    except Exception as e:
-        print("missing2")
-        print(e)
+    # except Exception as e:
+    #     print("missing2")
+    #     print(e)
 
     try:
         # outList.append(site3(result[i]["Link 3"]))
