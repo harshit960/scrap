@@ -430,7 +430,7 @@ for i in range(len(result)):
     outList = []
     st=1
     try:
-        # outList.append(site1(result[i]["Link 1"]))
+        outList.append(site1(result[i]["Link 1"]))
         print("site 1 done")
     except Exception as e:
         print("missing1")
@@ -439,16 +439,16 @@ for i in range(len(result)):
     st=2
     driver.quit()
     driver=resetdriver()
-    
-    outList.append(site2(result[i]["Link 2"]))
-    print("site 2 done")
+    try:
+        outList.append(site2(result[i]["Link 2"]))
+        print("site 2 done")
         
-    # except Exception as e:
-    #     print("missing2")
-    #     print(e)
+    except Exception as e:
+        print("missing2")
+        print(e)
 
     try:
-        # outList.append(site3(result[i]["Link 3"]))
+        outList.append(site3(result[i]["Link 3"]))
         print("site 3 done")
     except Exception as e:
         print("")
