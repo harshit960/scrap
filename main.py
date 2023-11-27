@@ -175,8 +175,12 @@ def site1(link):
                 # temolistt.append(linkk[i])
                 # outdata[i] = temolistt
                 dictt[1]=listt[i]
-                dictt[2]=b[1]
-                dictt[3]=prezzos[i].replace('.000','').replace('€','')
+                dictt[2]=float(b[1])
+                try:
+                    dictt[3]=float(prezzos[i].replace('.000','').replace('€',''))
+                except:
+                    dictt[3]=prezzos[i].replace('.000','').replace('€','')
+
                 if len(b)>=4 :
                     dictt[9]=b[3]
                 
@@ -269,7 +273,7 @@ def site2(link):
                 # #templistt.append(blistt[i])
                 # templistt.append(total[i][1])
                 # templistt.append(total[i][2])
-                print(total[i][2])
+                # print(total[i][2])
                 pat=r"(\w+)\s+m2(.*)"
                 mq=re.search(pat,total[i][2])
                 # print(mq)
@@ -280,9 +284,13 @@ def site2(link):
                 # outdata[i] = templistt
 
                 dictt[1]=listt[i]
-                dictt[3]=total[i][1].replace('.000€','')
+                try:
+                    dictt[3]=float(total[i][1].replace('.000€','').replace('.',''))
+                except:
+                    dictt[3]=total[i][1].replace('.000€','').replace('.','')
+
                 if mq:
-                    dictt[2]=mq.group(1)
+                    dictt[2]=float(mq.group(1))
                     dictt[7]=mq.group(2)
                     dictt[8]=mq.group(2)
                 dictt[13]=linkk[i]
@@ -399,7 +407,7 @@ def site3(link):
                 # outdata[i] = templistt
                 dictt[1]=listt[i]
                 priccc=total[i][4].split()
-                dictt[2]=priccc[0]
+                dictt[2]=float(priccc[0])
                 dictt[3]=math.trunc(float(total[i][3]))
                 dictt[7]=str(total[i][7])
                 dictt[9]=str(total[i][6])
@@ -435,7 +443,7 @@ for i in range(len(result)):
     except Exception as e:
         print("missing1")
         print(e)
-    
+
     st=2
     driver.quit()
     driver=resetdriver()
